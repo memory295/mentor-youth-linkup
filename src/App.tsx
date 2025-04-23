@@ -11,6 +11,9 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 
+// Onboarding Pages
+import MentorOnboarding from "./pages/onboarding/MentorOnboarding";
+
 // Mentor Pages
 import MentorDashboard from "./pages/mentor/MentorDashboard";
 
@@ -33,6 +36,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          
+          {/* Onboarding Routes */}
+          <Route path="/onboarding/mentor" element={<MentorOnboarding />} />
           
           {/* Mentor Routes */}
           <Route path="/mentor/dashboard" element={<MentorDashboard />} />
