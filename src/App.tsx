@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +23,9 @@ import MenteeMentors from "./pages/mentee/MenteeMentors";
 import MenteeMessages from "./pages/mentee/MenteeMessages";
 import MenteeSessions from "./pages/mentee/MenteeSessions";
 import MenteeProfile from "./pages/mentee/MenteeProfile";
+
+// Admin Pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const queryClient = new QueryClient();
 
