@@ -2,6 +2,7 @@
 import DashboardLayout from '@/components/DashboardLayout';
 import MenteeStats from '@/components/mentee/MenteeStats';
 import MenteeActiveProjects from '@/components/mentee/MenteeActiveProjects';
+import MenteeUpcomingSessions from '@/components/mentee/MenteeUpcomingSessions';
 
 const MenteeDashboard = () => {
   return (
@@ -13,7 +14,10 @@ const MenteeDashboard = () => {
         </div>
         
         <MenteeStats />
-        <MenteeActiveProjects />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <MenteeActiveProjects />
+          <MenteeUpcomingSessions />
+        </div>
       </div>
     </DashboardLayout>
   );
