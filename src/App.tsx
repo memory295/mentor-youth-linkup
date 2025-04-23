@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,9 +18,10 @@ import MentorDashboard from "./pages/mentor/MentorDashboard";
 
 // Mentee Pages
 import MenteeDashboard from "./pages/mentee/MenteeDashboard";
-
-// Admin Pages
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import MenteeMentors from "./pages/mentee/MenteeMentors";
+import MenteeMessages from "./pages/mentee/MenteeMessages";
+import MenteeSessions from "./pages/mentee/MenteeSessions";
+import MenteeProfile from "./pages/mentee/MenteeProfile";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +45,10 @@ const App = () => (
           
           {/* Mentee Routes */}
           <Route path="/mentee/dashboard" element={<MenteeDashboard />} />
+          <Route path="/mentee/mentors" element={<MenteeMentors />} />
+          <Route path="/mentee/messages" element={<MenteeMessages />} />
+          <Route path="/mentee/sessions" element={<MenteeSessions />} />
+          <Route path="/mentee/profile" element={<MenteeProfile />} />
           
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
