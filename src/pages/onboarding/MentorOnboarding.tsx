@@ -1,40 +1,15 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CheckCircle, CircleSlash } from 'lucide-react';
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-
-const onboardingSchema = z.object({
-  fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
-  jobTitle: z.string().min(2, { message: 'Job title is required.' }),
-  company: z.string().min(2, { message: 'Company name is required.' }),
-  yearsOfExperience: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 0, {
-    message: 'Please enter a valid number of years.'
-  }),
-  skills: z.string().min(2, { message: 'Please enter at least one skill.' }),
-  bio: z.string().min(10, { message: 'Bio must be at least 10 characters.' }),
-  linkedIn: z.string().url({ message: 'Please enter a valid LinkedIn URL.' }).optional().or(z.literal('')),
-  github: z.string().url({ message: 'Please enter a valid GitHub URL.' }).optional().or(z.literal('')),
-  availability: z.string().min(2, { message: 'Please specify your availability.' }),
-});
-
-type OnboardingFormValues = z.infer<typeof onboardingSchema>;
+import { onboardingSchema, type OnboardingFormValues } from '@/components/onboarding/types';
+import OnboardingProgress from '@/components/onboarding/OnboardingProgress';
+import BasicInfoForm from '@/components/onboarding/BasicInfoForm';
+import ExpertiseForm from '@/components/onboarding/ExpertiseForm';
+import AvailabilityForm from '@/components/onboarding/AvailabilityForm';
 
 const MentorOnboarding = () => {
   const [step, setStep] = useState(1);
@@ -78,7 +53,6 @@ const MentorOnboarding = () => {
       description: "Your mentor profile has been successfully set up.",
     });
     
-    // Redirect to mentor dashboard after successful onboarding
     setTimeout(() => {
       navigate('/mentor/dashboard');
     }, 1500);
@@ -92,23 +66,7 @@ const MentorOnboarding = () => {
           <p className="text-muted-foreground mt-2">Complete your profile to start mentoring</p>
         </div>
 
-        {/* Progress Indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center w-full max-w-md">
-            <div className={`w-1/3 flex flex-col items-center ${step >= 1 ? 'text-must-blue' : 'text-muted-foreground'}`}>
-              <div className={`rounded-full flex items-center justify-center w-10 h-10 mb-1 ${step >= 1 ? 'bg-must-blue text-white' : 'bg-muted text-muted-foreground'}`}>1</div>
-              <span className="text-xs font-medium">Basic Info</span>
-            </div>
-            <div className={`w-1/3 flex flex-col items-center ${step >= 2 ? 'text-must-blue' : 'text-muted-foreground'}`}>
-              <div className={`rounded-full flex items-center justify-center w-10 h-10 mb-1 ${step >= 2 ? 'bg-must-blue text-white' : 'bg-muted text-muted-foreground'}`}>2</div>
-              <span className="text-xs font-medium">Expertise</span>
-            </div>
-            <div className={`w-1/3 flex flex-col items-center ${step >= 3 ? 'text-must-blue' : 'text-muted-foreground'}`}>
-              <div className={`rounded-full flex items-center justify-center w-10 h-10 mb-1 ${step >= 3 ? 'bg-must-blue text-white' : 'bg-muted text-muted-foreground'}`}>3</div>
-              <span className="text-xs font-medium">Availability</span>
-            </div>
-          </div>
-        </div>
+        <OnboardingProgress currentStep={step} />
 
         <Card className="shadow-md">
           <CardHeader>
@@ -125,176 +83,21 @@ const MentorOnboarding = () => {
           </CardHeader>
           <CardContent>
             {step === 1 && (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmitBasicInfo)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Jane Doe" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="jobTitle"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Job Title</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Senior Software Engineer" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="company"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Company</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Tech Company Inc." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="flex justify-end">
-                    <Button type="submit">Next: Expertise</Button>
-                  </div>
-                </form>
-              </Form>
+              <BasicInfoForm form={form} onSubmit={onSubmitBasicInfo} />
             )}
-
             {step === 2 && (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmitExpertise)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="yearsOfExperience"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Years of Experience</FormLabel>
-                        <FormControl>
-                          <Input type="number" min="0" placeholder="5" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="skills"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Skills (comma separated)</FormLabel>
-                        <FormControl>
-                          <Input placeholder="React, JavaScript, Node.js" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="bio"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Professional Bio</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Tell us about your background, experience, and what you're passionate about..." 
-                            className="min-h-[120px]" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="flex justify-between">
-                    <Button type="button" variant="outline" onClick={() => setStep(1)}>Back</Button>
-                    <Button type="submit">Next: Availability</Button>
-                  </div>
-                </form>
-              </Form>
+              <ExpertiseForm 
+                form={form} 
+                onSubmit={onSubmitExpertise}
+                onBack={() => setStep(1)}
+              />
             )}
-
             {step === 3 && (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmitAvailability)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="linkedIn"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>LinkedIn Profile URL</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://linkedin.com/in/yourname" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="github"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>GitHub Profile URL</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://github.com/yourusername" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="availability"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Availability</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="E.g., Weekday evenings, Saturday mornings, 2 hours per week..." 
-                            className="min-h-[100px]" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2 p-3 rounded-md bg-muted/50">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <div className="text-sm">
-                        <p className="font-medium">Weekly commitment</p>
-                        <p className="text-muted-foreground">We recommend 1-3 hours per week for effective mentorship</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 p-3 rounded-md bg-muted/50">
-                      <CircleSlash className="h-5 w-5 text-amber-500" />
-                      <div className="text-sm">
-                        <p className="font-medium">Set boundaries</p>
-                        <p className="text-muted-foreground">Be clear about when you're available and when you're not</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between">
-                    <Button type="button" variant="outline" onClick={() => setStep(2)}>Back</Button>
-                    <Button type="submit">Complete Profile</Button>
-                  </div>
-                </form>
-              </Form>
+              <AvailabilityForm 
+                form={form} 
+                onSubmit={onSubmitAvailability}
+                onBack={() => setStep(2)}
+              />
             )}
           </CardContent>
           <CardFooter className="flex justify-center border-t p-4">
