@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import OnboardingProgress from '@/components/onboarding/OnboardingProgress';
@@ -16,15 +15,15 @@ const MentorOnboardingDemo = () => {
   const form = useForm<OnboardingFormValues>({
     resolver: zodResolver(onboardingSchema),
     defaultValues: {
-      fullName: '',
-      jobTitle: '',
-      company: '',
-      yearsOfExperience: '',
-      skills: '',
-      bio: '',
-      linkedIn: '',
-      github: '',
-      availability: ''
+      fullName: 'Jane Doe',
+      jobTitle: 'Senior Software Engineer',
+      company: 'Tech Innovations Inc.',
+      yearsOfExperience: '7',
+      skills: 'React, TypeScript, Node.js, GraphQL',
+      bio: 'Passionate software engineer with 7 years of experience in building scalable web applications. Specializing in frontend technologies and mentoring junior developers.',
+      linkedIn: 'https://linkedin.com/in/janedoe',
+      github: 'https://github.com/janedoe',
+      availability: 'Weekday evenings from 6-8 PM EST, Saturday mornings 10 AM-12 PM'
     }
   });
 
@@ -44,7 +43,6 @@ const MentorOnboardingDemo = () => {
 
   const handleAvailabilitySubmit = (values: Partial<OnboardingFormValues>) => {
     form.setValue('availability', values.availability || '');
-    // In a real app, this would submit the full form
     alert('Onboarding Complete! Values: ' + JSON.stringify(form.getValues(), null, 2));
   };
 
