@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { User, Home, Book, Calendar, MessageSquare, Settings, ArrowLeft, ArrowRight, Users, List } from 'lucide-react';
+import { User, Home, Book, Calendar, MessageSquare, Settings, ArrowLeft, ArrowRight, Users, List, Video } from 'lucide-react';
 
 interface SidebarProps {
   role: 'admin' | 'mentor' | 'mentee';
@@ -14,6 +14,7 @@ const roleBasedLinks = {
     { name: 'Dashboard', icon: <Home className="w-5 h-5" />, href: '/admin/dashboard' },
     { name: 'Users', icon: <Users className="w-5 h-5" />, href: '/admin/users' },
     { name: 'Projects', icon: <Book className="w-5 h-5" />, href: '/admin/projects' },
+    { name: 'Sessions', icon: <Video className="w-5 h-5" />, href: '/admin/sessions' },
     { name: 'Events', icon: <Calendar className="w-5 h-5" />, href: '/admin/events' },
     { name: 'Reports', icon: <List className="w-5 h-5" />, href: '/admin/reports' },
     { name: 'Settings', icon: <Settings className="w-5 h-5" />, href: '/admin/settings' },
