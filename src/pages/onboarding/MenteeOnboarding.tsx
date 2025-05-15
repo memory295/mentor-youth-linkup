@@ -25,8 +25,6 @@ const MenteeOnboarding = () => {
       graduation_year: '',
       interests: '',
       goals: '',
-      preferredCommunication: '',
-      availability: '',
     }
   });
 
