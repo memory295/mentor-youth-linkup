@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { menteeOnboardingSchema, type MenteeOnboardingFormValues } from '@/components/onboarding/mentee-types';
 import MenteeOnboardingProgress from '@/components/onboarding/mentee/MenteeOnboardingProgress';
 import BasicInfoForm from '@/components/onboarding/mentee/BasicInfoForm';
@@ -25,6 +25,8 @@ const MenteeOnboarding = () => {
       graduation_year: '',
       interests: '',
       goals: '',
+      preferredCommunication: '',
+      availability: '',
     }
   });
 
