@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,8 @@ import NotFound from "./pages/NotFound";
 // Onboarding Pages
 import MentorOnboarding from "./pages/onboarding/MentorOnboarding";
 import MentorOnboardingDemo from "./pages/onboarding/MentorOnboardingDemo";
+import MenteeOnboarding from "./pages/onboarding/MenteeOnboarding";
+import MenteeOnboardingDemo from "./pages/onboarding/MenteeOnboardingDemo";
 
 // Mentor Pages
 import MentorDashboard from "./pages/mentor/MentorDashboard";
@@ -49,6 +52,8 @@ const App = () => (
           {/* Onboarding Routes */}
           <Route path="/onboarding/mentor" element={<MentorOnboarding />} />
           <Route path="/onboarding/mentor/demo" element={<MentorOnboardingDemo />} />
+          <Route path="/onboarding/mentee" element={<MenteeOnboarding />} />
+          <Route path="/onboarding/mentee/demo" element={<MenteeOnboardingDemo />} />
           
           {/* Mentor Routes */}
           <Route path="/mentor/dashboard" element={<MentorDashboard />} />
