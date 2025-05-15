@@ -9,6 +9,8 @@ export const menteeOnboardingSchema = z.object({
   }),
   interests: z.string().min(2, { message: 'Please enter at least one area of interest.' }),
   goals: z.string().min(10, { message: 'Career goals must be at least 10 characters.' }),
+  preferredCommunication: z.string().min(2, { message: 'Please specify your preferred communication method.' }),
+  availability: z.string().min(2, { message: 'Please specify your availability.' }),
 });
 
 export type MenteeOnboardingFormValues = z.infer<typeof menteeOnboardingSchema>;

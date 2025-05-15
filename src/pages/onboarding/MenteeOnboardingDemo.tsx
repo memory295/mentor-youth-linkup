@@ -21,6 +21,8 @@ const MenteeOnboardingDemo = () => {
       graduation_year: '2025',
       goals: 'Looking to transition into a senior developer role within the next 2 years with a focus on full-stack development. Long term goal is to become a technical lead or architect.',
       interests: 'Web Development, Cloud Architecture, Mobile Development',
+      preferredCommunication: 'Video calls and chat',
+      availability: 'Weekday evenings and weekend mornings, 1-2 hours per week',
     }
   });
 
@@ -37,7 +39,7 @@ const MenteeOnboardingDemo = () => {
     setCurrentStep(3);
   };
 
-  const handleAvailabilitySubmit = (values: Partial<MenteeOnboardingFormValues>) => {
+  const handleAvailabilitySubmit = (values: MenteeOnboardingFormValues) => {
     alert('Onboarding Complete! Values: ' + JSON.stringify(form.getValues(), null, 2));
   };
 
