@@ -26,7 +26,7 @@ const CareerGoalsForm: FC<CareerGoalsFormProps> = ({ form, onSubmit, onBack }) =
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="careerGoals"
+          name="goals"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Career Goals</FormLabel>
@@ -49,19 +49,6 @@ const CareerGoalsForm: FC<CareerGoalsFormProps> = ({ form, onSubmit, onBack }) =
               <FormLabel>Areas of Interest</FormLabel>
               <FormControl>
                 <Input placeholder="Web Development, Machine Learning, UX Design" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="linkedIn"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>LinkedIn Profile URL (Optional)</FormLabel>
-              <FormControl>
-                <Input placeholder="https://linkedin.com/in/yourname" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

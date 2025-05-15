@@ -21,13 +21,10 @@ const MenteeOnboarding = () => {
     resolver: zodResolver(menteeOnboardingSchema),
     defaultValues: {
       fullName: '',
-      education: '',
-      currentRole: '',
-      careerGoals: '',
+      current_education: '',
+      graduation_year: '',
       interests: '',
-      linkedIn: '',
-      preferredCommunication: '',
-      availability: '',
+      goals: '',
     }
   });
 

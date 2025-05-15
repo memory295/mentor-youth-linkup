@@ -17,33 +17,27 @@ const MenteeOnboardingDemo = () => {
     resolver: zodResolver(menteeOnboardingSchema),
     defaultValues: {
       fullName: 'John Smith',
-      education: 'Bachelor of Science in Computer Engineering',
-      currentRole: 'Junior Web Developer',
-      careerGoals: 'Looking to transition into a senior developer role within the next 2 years with a focus on full-stack development. Long term goal is to become a technical lead or architect.',
+      current_education: 'Bachelor of Science in Computer Engineering',
+      graduation_year: '2025',
+      goals: 'Looking to transition into a senior developer role within the next 2 years with a focus on full-stack development. Long term goal is to become a technical lead or architect.',
       interests: 'Web Development, Cloud Architecture, Mobile Development',
-      linkedIn: 'https://linkedin.com/in/johnsmith',
-      preferredCommunication: 'Video calls and chat',
-      availability: 'Monday and Wednesday evenings 7-9 PM EST, Sunday afternoons 2-5 PM EST'
     }
   });
 
   const handleBasicInfoSubmit = (values: Partial<MenteeOnboardingFormValues>) => {
     form.setValue('fullName', values.fullName || '');
-    form.setValue('education', values.education || '');
-    form.setValue('currentRole', values.currentRole || '');
+    form.setValue('current_education', values.current_education || '');
+    form.setValue('graduation_year', values.graduation_year || '');
     setCurrentStep(2);
   };
 
   const handleCareerGoalsSubmit = (values: Partial<MenteeOnboardingFormValues>) => {
-    form.setValue('careerGoals', values.careerGoals || '');
+    form.setValue('goals', values.goals || '');
     form.setValue('interests', values.interests || '');
-    form.setValue('linkedIn', values.linkedIn || '');
     setCurrentStep(3);
   };
 
   const handleAvailabilitySubmit = (values: Partial<MenteeOnboardingFormValues>) => {
-    form.setValue('preferredCommunication', values.preferredCommunication || '');
-    form.setValue('availability', values.availability || '');
     alert('Onboarding Complete! Values: ' + JSON.stringify(form.getValues(), null, 2));
   };
 

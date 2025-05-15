@@ -3,13 +3,12 @@ import { z } from 'zod';
 
 export const menteeOnboardingSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name must be at least 2 characters.' }),
-  education: z.string().min(2, { message: 'Education information is required.' }),
-  currentRole: z.string().min(2, { message: 'Current role is required.' }),
-  careerGoals: z.string().min(10, { message: 'Career goals must be at least 10 characters.' }),
+  current_education: z.string().min(2, { message: 'Current education information is required.' }),
+  graduation_year: z.string().refine((val) => !isNaN(Number(val)) && Number(val) >= 2000 && Number(val) <= 2100, {
+    message: 'Please enter a valid graduation year between 2000 and 2100.'
+  }),
   interests: z.string().min(2, { message: 'Please enter at least one area of interest.' }),
-  linkedIn: z.string().url({ message: 'Please enter a valid LinkedIn URL.' }).optional().or(z.literal('')),
-  preferredCommunication: z.string().min(2, { message: 'Please specify your preferred communication method.' }),
-  availability: z.string().min(2, { message: 'Please specify your availability.' }),
+  goals: z.string().min(10, { message: 'Career goals must be at least 10 characters.' }),
 });
 
 export type MenteeOnboardingFormValues = z.infer<typeof menteeOnboardingSchema>;

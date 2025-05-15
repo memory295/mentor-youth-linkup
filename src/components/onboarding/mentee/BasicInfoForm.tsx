@@ -37,10 +37,10 @@ const BasicInfoForm: FC<BasicInfoFormProps> = ({ form, onSubmit }) => {
         />
         <FormField
           control={form.control}
-          name="education"
+          name="current_education"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Education</FormLabel>
+              <FormLabel>Current Education</FormLabel>
               <FormControl>
                 <Input placeholder="Bachelor's in Computer Science" {...field} />
               </FormControl>
@@ -50,12 +50,12 @@ const BasicInfoForm: FC<BasicInfoFormProps> = ({ form, onSubmit }) => {
         />
         <FormField
           control={form.control}
-          name="currentRole"
+          name="graduation_year"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Current Role</FormLabel>
+              <FormLabel>Graduation Year</FormLabel>
               <FormControl>
-                <Input placeholder="Junior Developer" {...field} />
+                <Input type="number" placeholder="2025" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
