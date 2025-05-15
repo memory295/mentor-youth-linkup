@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Bell, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -10,118 +11,53 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Bell, Search, Settings, User, MessageSquare } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 interface DashboardHeaderProps {
   role: 'admin' | 'mentor' | 'mentee';
 }
 
 const DashboardHeader = ({ role }: DashboardHeaderProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/${role}/search?q=${encodeURIComponent(searchQuery)}`);
-    }
-  };
-
   return (
-    <header className="bg-background border-b border-border h-16 flex items-center px-4">
-      <div className="flex-1 flex items-center">
-        <form onSubmit={handleSearch} className="max-w-lg w-full hidden md:block">
-          <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="pl-8"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </form>
+    <header className="bg-background sticky top-0 z-30 flex h-16 items-center border-b px-4 md:px-6 shadow-sm">
+      <div className="md:hidden">
+        <Button variant="ghost" size="icon">
+          <Menu className="h-5 w-5" />
+        </Button>
       </div>
       
-      <div className="flex items-center space-x-2">
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <MessageSquare className="h-5 w-5" />
+      <div className="flex-1 ml-4 md:ml-0">
+        <div className="relative md:max-w-md">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <input
+            type="search"
+            placeholder="Search..."
+            className="pl-8 h-9 w-full md:w-64 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          />
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" className="relative">
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary"></span>
         </Button>
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-muted-foreground relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-destructive-foreground text-xs">
-                3
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
-            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {role === 'mentor' && (
-              <>
-                <DropdownMenuItem className="p-3 cursor-pointer">
-                  <div>
-                    <p className="text-sm font-medium">New mentee request</p>
-                    <p className="text-xs text-muted-foreground">Alex Smith wants to connect with you</p>
-                    <p className="text-xs text-muted-foreground mt-1">2 minutes ago</p>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-              </>
-            )}
-            <DropdownMenuItem className="p-3 cursor-pointer">
-              <div>
-                <p className="text-sm font-medium">Project update</p>
-                <p className="text-xs text-muted-foreground">New commit in your React project</p>
-                <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+            <Button variant="ghost" className="relative h-9 w-9 rounded-full">
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">
+                {role === 'admin' ? 'A' : role === 'mentor' ? 'M' : 'S'}
               </div>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="p-3 cursor-pointer">
-              <div>
-                <p className="text-sm font-medium">Upcoming session</p>
-                <p className="text-xs text-muted-foreground">Mentorship session tomorrow at 3pm</p>
-                <p className="text-xs text-muted-foreground mt-1">5 hours ago</p>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="p-2 text-center cursor-pointer">
-              <Link to={`/${role}/notifications`} className="text-sm text-primary">
-                View all notifications
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="text-muted-foreground">
-              <User className="h-5 w-5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to={`/${role}/profile`}>
-                <User className="w-4 h-4 mr-2" />
-                Profile
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={`/${role}/settings`}>
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
-              </Link>
-            </DropdownMenuItem>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link to="/logout">Logout</Link>
+              <Link to="/login">Logout</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
