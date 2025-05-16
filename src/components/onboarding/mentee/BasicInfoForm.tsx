@@ -19,9 +19,14 @@ interface BasicInfoFormProps {
 }
 
 const BasicInfoForm: FC<BasicInfoFormProps> = ({ form, onSubmit }) => {
+  const handleSubmit = (values: Partial<MenteeOnboardingFormValues>) => {
+    console.log("Submitting basic info:", values);
+    onSubmit(values);
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="fullName"
@@ -55,7 +60,7 @@ const BasicInfoForm: FC<BasicInfoFormProps> = ({ form, onSubmit }) => {
             <FormItem>
               <FormLabel>Graduation Year</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="2025" {...field} />
+                <Input type="number" placeholder="2025" {...field} onChange={e => field.onChange(e.target.value)} />
               </FormControl>
               <FormMessage />
             </FormItem>
