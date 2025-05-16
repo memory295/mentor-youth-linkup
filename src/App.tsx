@@ -24,6 +24,7 @@ import MenteeOnboardingDemo from "./pages/onboarding/MenteeOnboardingDemo";
 
 // Mentor Pages
 import MentorDashboard from "./pages/mentor/MentorDashboard";
+import MentorProfile from "./pages/mentor/MentorProfile";
 
 // Mentee Pages
 import MenteeDashboard from "./pages/mentee/MenteeDashboard";
@@ -68,6 +69,7 @@ const App = () => (
           
           {/* Mentor Routes */}
           <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+          <Route path="/mentor/profile" element={<MentorProfile />} />
           
           {/* Mentee Routes */}
           <Route path="/mentee/dashboard" element={<MenteeDashboard />} />

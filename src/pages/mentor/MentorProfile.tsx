@@ -13,49 +13,53 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Pencil, User, Book, Calendar, GraduationCap, Star } from "lucide-react";
+import { Pencil, User, Briefcase, Calendar, GraduationCap, Star } from "lucide-react";
 
-const profileSchema = z.object({
+const mentorProfileSchema = z.object({
   fullName: z.string().min(2, { message: "Full name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
-  bio: z.string().optional(),
-  current_education: z.string().min(2, { message: "Current education information is required." }),
-  graduation_year: z.coerce.number()
-    .min(2000, { message: "Please enter a valid graduation year from 2000 onwards." })
-    .max(2100, { message: "Please enter a valid graduation year before 2100." }),
-  interests: z.string().min(2, { message: "Please enter at least one area of interest." }),
-  goals: z.string().min(10, { message: "Career goals must be at least 10 characters." }),
-  preferredCommunication: z.string().min(2, { message: "Please select a preferred communication method." }),
+  jobTitle: z.string().min(2, { message: "Job title is required." }),
+  company: z.string().min(2, { message: "Company name is required." }),
+  bio: z.string().min(10, { message: "Bio should be at least 10 characters." }),
+  yearsOfExperience: z.coerce.number().min(0, { message: "Years of experience must be a positive number." }),
+  skills: z.string().min(2, { message: "Please enter at least one skill." }),
+  education: z.string().optional(),
+  certifications: z.string().optional(),
   availability: z.string().min(2, { message: "Please specify your availability." }),
+  mentorshipAreas: z.string().min(2, { message: "Please specify areas you can mentor in." }),
+  preferredCommunication: z.string().min(2, { message: "Please select a preferred communication method." }),
   phone: z.string().optional(),
   linkedin: z.string().optional(),
   github: z.string().optional(),
 });
 
-type ProfileFormValues = z.infer<typeof profileSchema>;
+type MentorProfileFormValues = z.infer<typeof mentorProfileSchema>;
 
-const MenteeProfile = () => {
+const MentorProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
+  const form = useForm<MentorProfileFormValues>({
+    resolver: zodResolver(mentorProfileSchema),
     defaultValues: {
-      fullName: 'John Smith',
-      email: 'johnsmith@example.com',
-      bio: 'Computer science student passionate about web development and AI.',
-      current_education: 'Bachelor of Science in Computer Engineering',
-      graduation_year: 2025,
-      interests: 'Web Development, Cloud Architecture, Mobile Development',
-      goals: 'Looking to transition into a senior developer role within the next 2 years with a focus on full-stack development. Long term goal is to become a technical lead or architect.',
-      preferredCommunication: 'Video calls and chat',
-      availability: 'Weekdays after 6pm, weekends flexible',
-      phone: '+1 (555) 123-4567',
-      linkedin: 'https://linkedin.com/in/johnsmith',
-      github: 'https://github.com/johnsmith',
+      fullName: 'Jane Doe',
+      email: 'jane.doe@example.com',
+      jobTitle: 'Senior Software Engineer',
+      company: 'Tech Innovations Inc.',
+      bio: 'Passionate software engineer with expertise in React, Node.js and cloud architecture. I love mentoring junior developers and helping them advance their careers in tech.',
+      yearsOfExperience: 8,
+      skills: 'React, Node.js, TypeScript, AWS, System Design, Leadership',
+      education: 'M.S. Computer Science, University of Technology',
+      certifications: 'AWS Solutions Architect, Google Cloud Professional Developer',
+      availability: 'Weekday evenings (6-8pm), Saturday mornings',
+      mentorshipAreas: 'Web Development, Career Guidance, Technical Interview Preparation',
+      preferredCommunication: 'Video calls, Email',
+      phone: '+1 (555) 987-6543',
+      linkedin: 'https://linkedin.com/in/janedoe',
+      github: 'https://github.com/janedoe',
     }
   });
 
-  const onSubmit = (data: ProfileFormValues) => {
+  const onSubmit = (data: MentorProfileFormValues) => {
     // In a real app, this would send the data to an API
     console.log('Form submitted:', data);
     toast.success("Profile updated successfully!");
@@ -63,12 +67,12 @@ const MenteeProfile = () => {
   };
 
   return (
-    <DashboardLayout role="mentee">
+    <DashboardLayout role="mentor">
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold">My Profile</h1>
-            <p className="text-muted-foreground">Manage your profile information and preferences</p>
+            <p className="text-muted-foreground">Manage your mentor profile and preferences</p>
           </div>
           <Button 
             variant={isEditing ? "outline" : "default"} 
@@ -85,8 +89,8 @@ const MenteeProfile = () => {
         <Tabs defaultValue="personal">
           <TabsList className="mb-6">
             <TabsTrigger value="personal">Personal Information</TabsTrigger>
-            <TabsTrigger value="education">Education & Goals</TabsTrigger>
-            <TabsTrigger value="communication">Communication</TabsTrigger>
+            <TabsTrigger value="professional">Professional Details</TabsTrigger>
+            <TabsTrigger value="mentorship">Mentorship Preferences</TabsTrigger>
           </TabsList>
 
           <Form {...form}>
@@ -101,7 +105,7 @@ const MenteeProfile = () => {
                     <div className="flex items-center gap-6">
                       <Avatar className="h-24 w-24">
                         <AvatarImage src="/placeholder.svg" />
-                        <AvatarFallback className="text-lg">JS</AvatarFallback>
+                        <AvatarFallback className="text-lg">JD</AvatarFallback>
                       </Avatar>
                       <div>
                         <Button variant="outline" disabled={!isEditing} className="mb-2">
@@ -160,13 +164,13 @@ const MenteeProfile = () => {
                       name="bio"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Bio</FormLabel>
+                          <FormLabel>Professional Bio</FormLabel>
                           <FormControl>
                             <Textarea 
                               {...field} 
                               disabled={!isEditing}
-                              placeholder="Tell us a bit about yourself..."
-                              className="min-h-[120px]"
+                              placeholder="Tell mentees about your background, expertise, and mentoring approach..."
+                              className="min-h-[150px]"
                             />
                           </FormControl>
                           <FormMessage />
@@ -177,19 +181,19 @@ const MenteeProfile = () => {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="education" className="space-y-6">
+              <TabsContent value="professional" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Education & Career Goals</CardTitle>
-                    <CardDescription>Update your education information and career goals</CardDescription>
+                    <CardTitle>Professional Experience</CardTitle>
+                    <CardDescription>Update your work experience and skills</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <FormField
                       control={form.control}
-                      name="current_education"
+                      name="jobTitle"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Current Education</FormLabel>
+                          <FormLabel>Job Title</FormLabel>
                           <FormControl>
                             <Input {...field} disabled={!isEditing} />
                           </FormControl>
@@ -200,14 +204,28 @@ const MenteeProfile = () => {
 
                     <FormField
                       control={form.control}
-                      name="graduation_year"
+                      name="company"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Expected Graduation Year</FormLabel>
+                          <FormLabel>Company</FormLabel>
+                          <FormControl>
+                            <Input {...field} disabled={!isEditing} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="yearsOfExperience"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Years of Experience</FormLabel>
                           <FormControl>
                             <Input 
                               {...field} 
-                              type="number" 
+                              type="number"  
                               disabled={!isEditing} 
                             />
                           </FormControl>
@@ -218,10 +236,10 @@ const MenteeProfile = () => {
 
                     <FormField
                       control={form.control}
-                      name="interests"
+                      name="skills"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Areas of Interest (comma separated)</FormLabel>
+                          <FormLabel>Skills (comma separated)</FormLabel>
                           <FormControl>
                             <Input {...field} disabled={!isEditing} />
                           </FormControl>
@@ -232,43 +250,88 @@ const MenteeProfile = () => {
 
                     <FormField
                       control={form.control}
-                      name="goals"
+                      name="education"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Career Goals</FormLabel>
+                          <FormLabel>Education (Optional)</FormLabel>
                           <FormControl>
-                            <Textarea 
-                              {...field} 
-                              disabled={!isEditing}
-                              placeholder="Describe your short-term and long-term career goals..."
-                              className="min-h-[120px]"
-                            />
+                            <Input {...field} disabled={!isEditing} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+
+                    <FormField
+                      control={form.control}
+                      name="certifications"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Certifications (Optional)</FormLabel>
+                          <FormControl>
+                            <Input {...field} disabled={!isEditing} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="space-y-2">
+                      <Label>Social Profiles</Label>
+                      <div className="space-y-4">
+                        <FormField
+                          control={form.control}
+                          name="linkedin"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>LinkedIn URL</FormLabel>
+                              <FormControl>
+                                <Input {...field} disabled={!isEditing} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="github"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>GitHub URL</FormLabel>
+                              <FormControl>
+                                <Input {...field} disabled={!isEditing} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
 
-              <TabsContent value="communication" className="space-y-6">
+              <TabsContent value="mentorship" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Communication Preferences</CardTitle>
-                    <CardDescription>Set your preferred communication methods and availability</CardDescription>
+                    <CardTitle>Mentorship Preferences</CardTitle>
+                    <CardDescription>Set your mentorship preferences and availability</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <FormField
                       control={form.control}
-                      name="preferredCommunication"
+                      name="mentorshipAreas"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Preferred Communication Method</FormLabel>
+                          <FormLabel>Mentorship Areas</FormLabel>
                           <FormControl>
                             <Input {...field} disabled={!isEditing} />
                           </FormControl>
                           <FormMessage />
+                          <p className="text-sm text-muted-foreground">
+                            Specific areas where you can provide mentorship (comma-separated)
+                          </p>
                         </FormItem>
                       )}
                     />
@@ -294,24 +357,10 @@ const MenteeProfile = () => {
 
                     <FormField
                       control={form.control}
-                      name="linkedin"
+                      name="preferredCommunication"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>LinkedIn Profile (Optional)</FormLabel>
-                          <FormControl>
-                            <Input {...field} disabled={!isEditing} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="github"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>GitHub Profile (Optional)</FormLabel>
+                          <FormLabel>Preferred Communication Method</FormLabel>
                           <FormControl>
                             <Input {...field} disabled={!isEditing} />
                           </FormControl>
@@ -336,4 +385,4 @@ const MenteeProfile = () => {
   );
 };
 
-export default MenteeProfile;
+export default MentorProfile;
