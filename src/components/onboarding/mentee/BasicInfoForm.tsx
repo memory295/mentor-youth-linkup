@@ -60,7 +60,16 @@ const BasicInfoForm: FC<BasicInfoFormProps> = ({ form, onSubmit }) => {
             <FormItem>
               <FormLabel>Graduation Year</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="2025" {...field} onChange={e => field.onChange(e.target.value)} />
+                <Input 
+                  type="number" 
+                  placeholder="2025" 
+                  {...field} 
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    field.onChange(value);
+                  }}
+                  value={field.value || ''}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

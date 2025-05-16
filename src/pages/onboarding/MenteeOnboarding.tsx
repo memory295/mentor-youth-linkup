@@ -22,20 +22,27 @@ const MenteeOnboarding = () => {
     defaultValues: {
       fullName: '',
       current_education: '',
-      graduation_year: '',
+      graduation_year: undefined,
       interests: '',
       goals: '',
       preferredCommunication: '',
       availability: '',
-    }
+    },
+    mode: 'onChange'
   });
 
   const onSubmitBasicInfo = (values: Partial<MenteeOnboardingFormValues>) => {
-    setFormData({ ...formData, ...values });
+    console.log('Basic info submitted:', values);
+    setFormData((prev) => {
+      const newData = { ...prev, ...values };
+      console.log('Updated form data:', newData);
+      return newData;
+    });
     setStep(2);
   };
 
   const onSubmitCareerGoals = (values: Partial<MenteeOnboardingFormValues>) => {
+    console.log('Career goals submitted:', values);
     setFormData({ ...formData, ...values });
     setStep(3);
   };
@@ -55,6 +62,10 @@ const MenteeOnboarding = () => {
       navigate('/mentee/dashboard');
     }, 1500);
   };
+
+  // Add this for debugging
+  console.log('Current step:', step);
+  console.log('Form errors:', form.formState.errors);
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
