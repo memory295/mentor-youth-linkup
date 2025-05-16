@@ -7,6 +7,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Public Pages
 import Index from "./pages/Index";
+import About from "./pages/About";
+import Mentors from "./pages/Mentors";
+import Resources from "./pages/Resources";
+import Events from "./pages/Events";
+import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
@@ -47,6 +52,11 @@ const App = () => (
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Index />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/mentors" element={<Mentors />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           
