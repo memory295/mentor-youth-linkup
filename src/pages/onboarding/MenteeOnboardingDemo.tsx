@@ -18,18 +18,21 @@ const MenteeOnboardingDemo = () => {
     defaultValues: {
       fullName: 'John Smith',
       current_education: 'Bachelor of Science in Computer Engineering',
-      graduation_year: '2025',
+      graduation_year: 2025, // Changed from string to number
       goals: 'Looking to transition into a senior developer role within the next 2 years with a focus on full-stack development. Long term goal is to become a technical lead or architect.',
       interests: 'Web Development, Cloud Architecture, Mobile Development',
       preferredCommunication: 'Video calls and chat',
       availability: 'Weekdays after 6pm, weekends flexible',
-    }
+    },
+    mode: 'onChange'
   });
 
   const handleBasicInfoSubmit = (values: Partial<MenteeOnboardingFormValues>) => {
     form.setValue('fullName', values.fullName || '');
     form.setValue('current_education', values.current_education || '');
-    form.setValue('graduation_year', values.graduation_year || '');
+    if (values.graduation_year) {
+      form.setValue('graduation_year', values.graduation_year);
+    }
     setCurrentStep(2);
   };
 
