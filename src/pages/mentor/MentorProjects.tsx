@@ -49,7 +49,8 @@ import {
   Eye,
   Video,
   Award,
-  Check
+  Check,
+  Book
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 

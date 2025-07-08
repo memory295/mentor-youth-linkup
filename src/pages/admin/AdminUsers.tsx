@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -129,6 +128,19 @@ const AdminUsers = () => {
       title: "Role updated",
       description: `${user.name}'s role has been changed to ${newRole}.`,
     });
+  };
+
+  const getStatusBadgeVariant = (status: UserStatus) => {
+    switch (status) {
+      case 'active':
+        return 'default';
+      case 'pending':
+        return 'secondary';
+      case 'suspended':
+        return 'destructive';
+      default:
+        return 'outline';
+    }
   };
 
   // Filter and search users
@@ -282,8 +294,7 @@ const AdminUsers = () => {
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={user.status === 'active' ? 'success' : 
-                                         user.status === 'pending' ? 'warning' : 'destructive'}>
+                          <Badge variant={getStatusBadgeVariant(user.status)}>
                             {user.status}
                           </Badge>
                         </TableCell>
