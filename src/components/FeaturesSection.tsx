@@ -7,22 +7,26 @@ const features = [
   {
     icon: <User className="w-6 h-6" />,
     title: 'Mentor Matching',
-    description: 'Connect with experienced professionals in your field of interest through our intelligent matching algorithm.'
+    description: 'Connect with experienced professionals in your field of interest through our intelligent matching algorithm.',
+    link: '/features/mentor-matching'
   },
   {
     icon: <Book className="w-6 h-6" />,
     title: 'Project Collaboration',
-    description: 'Work on real-world projects with direct guidance from industry experts and GitHub integration.'
+    description: 'Work on real-world projects with direct guidance from industry experts and GitHub integration.',
+    link: '/features/project-collaboration'
   },
   {
     icon: <Calendar className="w-6 h-6" />,
     title: 'Events & Workshops',
-    description: 'Participate in exclusive events, workshops, and networking sessions to expand your knowledge and connections.'
+    description: 'Participate in exclusive events, workshops, and networking sessions to expand your knowledge and connections.',
+    link: '/features/events-&-workshops'
   },
   {
     icon: <List className="w-6 h-6" />,
     title: 'Learning Resources',
-    description: 'Access curated learning materials, tutorials, and career guidance provided by our alumni network.'
+    description: 'Access curated learning materials, tutorials, and career guidance provided by our alumni network.',
+    link: '/features/learning-resources'
   }
 ];
 
@@ -46,7 +50,7 @@ const FeaturesSection = () => {
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
               <p className="text-muted-foreground flex-grow mb-4">{feature.description}</p>
               <Button variant="link" className="p-0 justify-start text-must-blue" asChild>
-                <Link to={`/features/${feature.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                <Link to={feature.link}>
                   Learn more
                 </Link>
               </Button>

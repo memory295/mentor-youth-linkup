@@ -16,6 +16,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 
+// Feature Pages
+import MentorMatching from "./pages/features/MentorMatching";
+import ProjectCollaboration from "./pages/features/ProjectCollaboration";
+import EventsWorkshops from "./pages/features/EventsWorkshops";
+import LearningResources from "./pages/features/LearningResources";
+
 // Onboarding Pages
 import MentorOnboarding from "./pages/onboarding/MentorOnboarding";
 import MentorOnboardingDemo from "./pages/onboarding/MentorOnboardingDemo";
@@ -61,6 +67,12 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          
+          {/* Feature Pages */}
+          <Route path="/features/mentor-matching" element={<MentorMatching />} />
+          <Route path="/features/project-collaboration" element={<ProjectCollaboration />} />
+          <Route path="/features/events-&-workshops" element={<EventsWorkshops />} />
+          <Route path="/features/learning-resources" element={<LearningResources />} />
           
           {/* Onboarding Routes */}
           <Route path="/onboarding/mentor" element={<MentorOnboarding />} />
